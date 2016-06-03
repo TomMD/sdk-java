@@ -103,7 +103,7 @@ public class RealmApiTest {
         queries.add(phone);
 
         Map<String,User> users = this.realmApi.usersGetByMetaAdvanced(queries);
-        assertTrue(users.size() == 0);
+        assertNull(users);
     }
 
     @Test

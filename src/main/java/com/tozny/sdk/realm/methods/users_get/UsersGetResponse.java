@@ -22,11 +22,4 @@ public class UsersGetResponse extends ToznyApiResponse<Map<String,User>> {
             @JsonProperty("errors")  List<ToznyApiError> errors) {
         super(ret, null, results, count, total, errors);
     }
-
-    @Nullable
-    @Override
-    public Map<String, User> getResult() {
-        Map<String, User> parentResult = super.getResult();
-        return parentResult != null ? parentResult : new HashMap();
-    }
 }
