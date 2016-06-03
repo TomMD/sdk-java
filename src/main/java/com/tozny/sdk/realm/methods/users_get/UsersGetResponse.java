@@ -6,8 +6,6 @@ import com.tozny.sdk.ToznyApiException.ToznyApiError;
 import com.tozny.sdk.ToznyApiResponse;
 import com.tozny.sdk.realm.User;
 
-import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
