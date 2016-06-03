@@ -1,13 +1,11 @@
 package com.tozny.sdk.internal;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -19,10 +17,7 @@ import com.tozny.sdk.realm.RealmConfig;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -51,7 +46,8 @@ public class ToznyProtocol {
         this.mapper = objectMapper;
         this.client = httpClient;
         this.mapper.registerModule(getJacksonModule());
-        this.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.mapper.registerModule(getMapModule());
+        this.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
     }
 
     public ToznyProtocol(RealmConfig realmConfig) {
@@ -196,4 +192,20 @@ public class ToznyProtocol {
         return toznyModule;
     }
 
+    private static Module getMapModule() {
+        Version version = new Version(1, 0, 0, null, "com.github.tozny", "tozny-sdk");
+        SimpleModule mapModule = new SimpleModule("MapModule", version);
+        mapModule.addDeserializer(Map.class, new JsonDeserializer<Map>() {
+            @Override
+            public Map deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+                return p.readValueAs(HashMap.class);
+            }
+
+            @Override
+            public Map getNullValue(DeserializationContext ctxt) {
+                return new HashMap();
+            }
+        });
+        return mapModule;
+    }
 }
