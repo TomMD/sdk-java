@@ -13,7 +13,7 @@ Library interface to the [Tozny][] authentication service. Use this Library to:
 
 ## API Documentation
 
-https://jitpack.io/com/github/tozny/sdk-java/2.1.5/javadoc/
+https://jitpack.io/com/github/tozny/sdk-java/2.1.6/javadoc/
 
 ## Installing
 
@@ -26,7 +26,7 @@ repositories {
   maven { url "https://jitpack.io" }
 }
 dependencies {
-  compile 'com.github.tozny:sdk-java:2.1.5'
+  compile 'com.github.tozny:sdk-java:2.1.6'
 }
 ```
 
@@ -49,7 +49,7 @@ Realm key id and secret are found in the realm key management section in the Toz
 `RealmApi` exposes a number of methods interact with your realm. Many of these
 translate to HTTP calls to the Tozny API. For details, see the [API documentation][].
 
-[API documentation]: https://jitpack.io/com/github/tozny/sdk-java/2.1.5/javadoc/
+[API documentation]: https://jitpack.io/com/github/tozny/sdk-java/2.1.6/javadoc/
 
 For a working example of SDK use, see the [secretmessage][] example app. In
 particular, the [`SessionResource`][SessionResource] class demonstrates how to
