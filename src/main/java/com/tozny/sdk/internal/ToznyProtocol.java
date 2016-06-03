@@ -46,7 +46,6 @@ public class ToznyProtocol {
         this.mapper = objectMapper;
         this.client = httpClient;
         this.mapper.registerModule(getJacksonModule());
-        this.mapper.registerModule(getMapModule());
         this.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
     }
 
@@ -190,22 +189,5 @@ public class ToznyProtocol {
         toznyModule.addDeserializer(Date.class, new DateDeserializer());
         toznyModule.addSerializer(Map.class, new Base64Serializer());
         return toznyModule;
-    }
-
-    private static Module getMapModule() {
-        Version version = new Version(1, 0, 0, null, "com.github.tozny", "tozny-sdk");
-        SimpleModule mapModule = new SimpleModule("MapModule", version);
-        mapModule.addDeserializer(Map.class, new JsonDeserializer<Map>() {
-            @Override
-            public Map deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-                return p.readValueAs(HashMap.class);
-            }
-
-            @Override
-            public Map getNullValue(DeserializationContext ctxt) {
-                return new HashMap();
-            }
-        });
-        return mapModule;
     }
 }
