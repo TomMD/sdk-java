@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
@@ -185,7 +186,11 @@ public class ToznyProtocol {
     }
 
     private static Call.Factory getDefaultHttpClient() {
-        return new OkHttpClient();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(300, TimeUnit.SECONDS);
+        builder.readTimeout(300, TimeUnit.SECONDS);
+
+        return builder.build();
     }
 
     public static Module getJacksonModule() {

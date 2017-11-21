@@ -25,6 +25,7 @@ public class RealmApiTest {
     private RealmApi realmApi;
 
     // Test variables taken from the environment.
+    private String apiUrl;
     private String realmKeyId;
     private String realmSecret;
     private String userId;
@@ -43,6 +44,7 @@ public class RealmApiTest {
         Properties props = new Properties();
         props.load(is);
 
+        this.apiUrl = props.getProperty("apiUrl");
         this.realmKeyId = props.getProperty("realmKey");;
         this.realmSecret = props.getProperty("realmSecret");
         this.userId = props.getProperty("userId");
@@ -50,11 +52,21 @@ public class RealmApiTest {
         this.userPhone = props.getProperty("userPhone");
 
         this.realmConfig = new RealmConfig(
+            this.apiUrl,
             new ToznyRealmKeyId(this.realmKeyId),
             new ToznyRealmSecret(this.realmSecret)
         );
 
         this.realmApi = new RealmApi(realmConfig);
+    }
+
+    @Test
+    public void testChallengeSession() throws IOException {
+        ChallengeSession cs = this.realmApi.createChallengeSession(this.userId);
+
+        assertEquals(this.realmKeyId, cs.getRealmKeyId().toString());
+        assertEquals("fixed or mobile", cs.getDeviceInfo().getType());
+        assertEquals("high", cs.getRiskFactor());
     }
 
     @Test
