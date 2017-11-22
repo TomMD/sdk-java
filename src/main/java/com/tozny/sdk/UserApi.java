@@ -101,6 +101,7 @@ public class UserApi {
      */
     private Challenge otpChallenge(final String destination, final String type, final String context, final String presence) {
         Map<String, String> args = new HashMap<String, String>() {{
+            this.clone();
             put("type", type);
             put("context", context);
             put("destination", destination);
@@ -108,6 +109,24 @@ public class UserApi {
         }};
 
         return this.<Challenge>rawCall("user.otp_challenge", args, new TypeReference<Challenge>() {});
+    }
+
+    /**
+     * Verify a given TOTP for the given session.
+     *
+     * @param totp Code to verify.
+     * @param session_id Session to complet with the TOTP.
+     *
+     * @return Realm-signed result of the TOTP authentication attempt..
+     */
+    public Result totpVerify(final String totp, final String session_id) {
+        Map<String, String> args = new HashMap<String, String>() {{
+            put("totp", totp);
+            put("session_id", session_id);
+        }};
+
+        return this.<Result>rawCall("user.totp_result", args, new TypeReference<Result>() {});
+
     }
 
     /**
