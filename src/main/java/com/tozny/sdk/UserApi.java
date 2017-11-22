@@ -123,6 +123,7 @@ public class UserApi {
         Map<String, String> args = new HashMap<String, String>() {{
             put("totp", totp);
             put("session_id", session_id);
+            put("realm_key_id", realmKeyId);
         }};
 
         return this.<Result>rawCall("user.totp_result", args, new TypeReference<Result>() {});
