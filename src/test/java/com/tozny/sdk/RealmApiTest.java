@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.*;
 
 import com.tozny.sdk.realm.*;
+import com.tozny.sdk.realm.methods.AuthStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -67,6 +68,14 @@ public class RealmApiTest {
         assertEquals(this.realmKeyId, cs.getRealmKeyId().toString());
         assertEquals("fixed or mobile", cs.getDeviceInfo().getType());
         assertEquals("high", cs.getRiskFactor());
+    }
+
+    @Test
+    public void testDynamicAuth() throws IOException {
+        ChallengeSession cs = this.realmApi.createChallengeSession(this.userId);
+
+        AuthStatus as = this.realmApi.dynamincAuthChallenge(cs.getSessionId());
+        assertEquals("otp-pending", as.getStatus());
     }
 
     @Test
