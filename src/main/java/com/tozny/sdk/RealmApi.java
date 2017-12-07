@@ -394,7 +394,7 @@ public class RealmApi {
      *
      * @return Information about the session's authentication status
      */
-    public AuthStatus dynamincAuthChallenge(String sessionId) throws ToznyApiException {
+    public AuthStatus dynamicAuthChallenge(String sessionId) throws ToznyApiException {
         DynamicAuthChallengeRequest request = new DynamicAuthChallengeRequest(sessionId);
         return protocol.<AuthStatus>dispatch(request, new TypeReference<AuthStatus>() {});
     }

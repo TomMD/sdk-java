@@ -74,7 +74,7 @@ public class RealmApiTest {
     public void testDynamicAuth() throws IOException {
         ChallengeSession cs = this.realmApi.createChallengeSession(this.userId);
 
-        AuthStatus as = this.realmApi.dynamincAuthChallenge(cs.getSessionId());
+        AuthStatus as = this.realmApi.dynamicAuthChallenge(cs.getSessionId());
         assertEquals("otp-pending", as.getStatus());
     }
 
