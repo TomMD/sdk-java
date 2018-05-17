@@ -11,6 +11,7 @@
 # Replace these values with your realm key, secret, and user
 # information from the Tozny admin console at https://admin.tozny.com
 # and rename this file to "test.properties".
+apiUrl = https://api.dev.tozny.com
 realmKey = sid_1234567890abc
 realmSecret = 20349823049234809248039482034983498
 userId = sid_3439843948
