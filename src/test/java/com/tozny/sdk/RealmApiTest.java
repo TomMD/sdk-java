@@ -29,6 +29,7 @@ public class RealmApiTest {
     private String userId;
     private String userEmail;
     private String userPhone;
+    private String badPhone;
 
     @Before
     public void init() throws Exception {
@@ -89,6 +90,20 @@ public class RealmApiTest {
         Map<String,User> users = this.realmApi.usersGetByMetaAdvanced(queries);
         assertTrue(users.size() == 1);
         assertEquals(this.userId, users.keySet().toArray()[0]);
+    }
+
+    @Test
+    public void testUsersGetByMetaAdvanced_NoUser() throws IOException {
+        Map<String, String> phone = new HashMap<String, String>();
+        phone.put("field", "phone");
+        phone.put("operator", "is_exactly");
+        phone.put("value", this.badPhone);
+
+        List<Map<String, String>> queries = new ArrayList<Map<String, String>>();
+        queries.add(phone);
+
+        Map<String,User> users = this.realmApi.usersGetByMetaAdvanced(queries);
+        assertNull(users);
     }
 
     @Test
