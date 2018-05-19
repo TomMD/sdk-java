@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.1.6] - 2016-06-03
+
+- Fix a JSON parsing exception when no results are returned from `realm.users_get` calls
+
 ## [2.1.5] - 2016-06-02
 
 - Update documentation

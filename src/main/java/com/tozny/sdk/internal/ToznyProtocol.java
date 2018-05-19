@@ -51,7 +51,7 @@ public class ToznyProtocol {
         this.mapper = objectMapper;
         this.client = httpClient;
         this.mapper.registerModule(getJacksonModule());
-        this.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        this.mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).enable(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT);
     }
 
     public ToznyProtocol(RealmConfig realmConfig) {
