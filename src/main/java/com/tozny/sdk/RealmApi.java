@@ -9,8 +9,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.tozny.sdk.internal.ProtocolHelpers;
 import com.tozny.sdk.internal.ToznyProtocol;
 import com.tozny.sdk.realm.*;
+import com.tozny.sdk.realm.methods.AuthStatus;
 import com.tozny.sdk.realm.methods.check_valid_login.CheckValidLoginRequest;
 import com.tozny.sdk.realm.methods.create_challenge.CreateChallengeRequest;
+import com.tozny.sdk.realm.methods.dynamic_auth_challenge.DynamicAuthChallengeRequest;
 import com.tozny.sdk.realm.methods.link_challenge.LinkChallengeRequest;
 import com.tozny.sdk.realm.methods.otp_challenge.OTPChallengeRequest;
 import com.tozny.sdk.realm.methods.question_challenge.QuestionChallengeRequest;
@@ -383,6 +385,18 @@ public class RealmApi {
     public ChallengeSession createChallengeSession(String userId) throws ToznyApiException {
         CreateChallengeRequest request = new CreateChallengeRequest(userId);
         return protocol.<ChallengeSession>dispatch(request, new TypeReference<ChallengeSession>() {});
+    }
+
+    /**
+     * Calls `realm.dynamic_auth_challenge` to authenticate a given challenge session dynamically.
+     *
+     * @param sessionId The ID of the session to authenticate.
+     *
+     * @return Information about the session's authentication status
+     */
+    public AuthStatus dynamicAuthChallenge(String sessionId) throws ToznyApiException {
+        DynamicAuthChallengeRequest request = new DynamicAuthChallengeRequest(sessionId);
+        return protocol.<AuthStatus>dispatch(request, new TypeReference<AuthStatus>() {});
     }
 
     /**
