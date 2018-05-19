@@ -10,6 +10,7 @@ import com.tozny.sdk.internal.ProtocolHelpers;
 import com.tozny.sdk.internal.ToznyProtocol;
 import com.tozny.sdk.realm.*;
 import com.tozny.sdk.realm.methods.check_valid_login.CheckValidLoginRequest;
+import com.tozny.sdk.realm.methods.create_challenge.CreateChallengeRequest;
 import com.tozny.sdk.realm.methods.link_challenge.LinkChallengeRequest;
 import com.tozny.sdk.realm.methods.otp_challenge.OTPChallengeRequest;
 import com.tozny.sdk.realm.methods.question_challenge.QuestionChallengeRequest;
@@ -370,6 +371,18 @@ public class RealmApi {
     public Boolean userPushByUsername(String sessionId, String username) {
         UserPushRequest request = new UserPushRequest(sessionId, null, null, username);
         return dispatchUserPush(request);
+    }
+
+    /**
+     * Calls `realm.create_challenge` to create an authentication challenge for a given user.
+     *
+     * @param userId The ID of the user to authenticate
+     *
+     * @return Data about the challenge session itself and the device being used for authentication
+     */
+    public ChallengeSession createChallengeSession(String userId) throws ToznyApiException {
+        CreateChallengeRequest request = new CreateChallengeRequest(userId);
+        return protocol.<ChallengeSession>dispatch(request, new TypeReference<ChallengeSession>() {});
     }
 
     /**
